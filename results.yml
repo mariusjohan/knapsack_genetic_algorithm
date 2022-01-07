@@ -1,0 +1,71 @@
+# ==========================================================
+# = Solver Results                                         =
+# ==========================================================
+# ----------------------------------------------------------
+#   Problem Information
+# ----------------------------------------------------------
+Problem: 
+- Name: unknown
+  Lower bound: 1130.0
+  Upper bound: 1130.0
+  Number of objectives: 1
+  Number of constraints: 2
+  Number of variables: 25
+  Number of nonzeros: 25
+  Sense: maximize
+# ----------------------------------------------------------
+#   Solver Information
+# ----------------------------------------------------------
+Solver: 
+- Status: ok
+  Termination condition: optimal
+  Statistics: 
+    Branch and bound: 
+      Number of bounded subproblems: 1
+      Number of created subproblems: 1
+  Error rc: 0
+  Time: 0.004004240036010742
+# ----------------------------------------------------------
+#   Solution Information
+# ----------------------------------------------------------
+Solution: 
+- number of solutions: 1
+  number of solutions displayed: 1
+- Gap: 0.0
+  Status: optimal
+  Message: None
+  Objective:
+    value:
+      Value: 1130
+  Variable:
+    x[banan]:
+      Value: 1
+    x[kamera]:
+      Value: 1
+    x[kompas]:
+      Value: 1
+    x[kort]:
+      Value: 1
+    x[ost]:
+      Value: 1
+    x[pung]:
+      Value: 1
+    x[sandwich]:
+      Value: 1
+    x[sokker]:
+      Value: 1
+    x[solbriller]:
+      Value: 1
+    x[solcreme]:
+      Value: 1
+    x[sukker]:
+      Value: 1
+    x[vand]:
+      Value: 1
+    x[vandtæt overtøj]:
+      Value: 1
+    x[vandtætte bukser]:
+      Value: 1
+    x[æble]:
+      Value: 1
+  Constraint: No values

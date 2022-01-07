@@ -1,5 +1,7 @@
 import random
 import sys
+import matplotlib.pyplot as plt
+
 sys.setrecursionlimit(100000)
 
 class KnapSack:
@@ -9,8 +11,10 @@ class KnapSack:
         self.gene_len = len(v)
         self.population_size = c
         self.startpopulation = self.startPopulation(self.population_size, self.gene_len)
- 
+        
         self.max_weight = mw
+
+        self.fitness_history = []
 
     def startPopulation(self, children, n):
         population = []
@@ -46,6 +50,7 @@ class KnapSack:
         for i in range(self.population_size):
             parents = random.choices(population, normalized_fitness, k=2)
             midpoint = random.randint(0,self.gene_len-1)
+            random.shuffle(parents)
             child = parents[0][:midpoint] + parents[1][midpoint:]
             new_population.append(child)
         return new_population
@@ -54,7 +59,7 @@ class KnapSack:
         mutated_population = []
         for gene in population:
             for idx, single_gene in enumerate(gene):
-                if random.randint(0,200) == 1:
+                if random.randint(0,1000) == 1:
                     gene[idx] = 1-single_gene
             mutated_population.append(gene)
         return(mutated_population)
@@ -70,22 +75,45 @@ class KnapSack:
         fitness = self.evaluate_fitness(population)
         mating_pool = self.mating_pool(fitness, population)
         population = self.mutate(mating_pool)
-        
+        self.fitness_history.append(population)
         return self.new_population(population, n-1)
     
     def return_result(self, population):
         fitness = self.evaluate_fitness(population)
-        best_gene_index = population.index(max(fitness))
-        jeans = population[best_gene_index]
+        population_fitness = list(zip(fitness, population))
+        population_fitness.sort(reverse=True)
+        jeans = population_fitness[0][1]
         total_v = 0
         total_w = 0
         for idx, gene in enumerate(jeans):
             if gene:
-                total_v += k.values[idx]
-                total_w += k.weights[idx]
+                total_v += self.values[idx]
+                total_w += self.weights[idx]
 
         print("value", total_v)
         print("weights", total_w)
+    
+    def create_graph(self):
+        mean_fitness = []
+        max_fitness = []
+        
+        for population in self.fitness_history:
+            fitness = self.evaluate_fitness(population)
+            mean_fitness.append(sum(fitness)/len(population))
+            
+            fitness_population = list(zip(fitness, population))
+            fitness_population.sort(reverse=True)
+            max_fitness.append(fitness_population[0][0])
+
+        plt.plot(mean_fitness, label = 'mean fitness')
+        plt.plot(max_fitness, label = 'max fitness')
+        plt.plot()
+        plt.show()
+
+            
+
+
+
 
 
 
@@ -96,20 +124,22 @@ values = {"kort": 150, "kompas": 35, "vand": 200, "sandwich":160, "sukker":60,"d
 weights = {"kort": 90, "kompas": 130, "vand": 1530, "sandwich":500, "sukker":150,"dåsemad": 680,"banan":270, "æble":390, "ost": 230, "øl": 520, "solcreme":110, "kamera":320, "T-shirt":240, "bukser":480, "paraply": 730, "vandtætte bukser": 420, "vandtæt overtøj": 430, "pung": 220, "solbriller": 70, "håndklæde":180, "sokker": 40, "bog":300, "notesbog": 900, "telt": 2000}
 
 
-k = KnapSack(list(values.values()), list(weights.values()), 100, 5000)
+k = KnapSack(list(values.values()), list(weights.values()), 20, 5000)
 
 test = k.run()
-print(test[0])
+k.return_result(test)
+k.create_graph()
+# print(test[0])
 
-total_v = 0
-total_w = 0
-for idx, gene in enumerate(test[0]):
-    if gene:
-        total_v += k.values[idx]
-        total_w += k.weights[idx]
+# total_v = 0
+# total_w = 0
+# for idx, gene in enumerate(test[0]):
+#     if gene:
+#         total_v += k.values[idx]
+#         total_w += k.weights[idx]
 
-print("value", total_v)
-print("weights", total_w)
+# print("value", total_v)
+# print("weights", total_w)
 
 # population = k.startpopulation
 # print("start pop:", population)
