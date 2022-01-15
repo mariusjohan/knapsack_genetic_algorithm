@@ -1,0 +1,27 @@
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <center>
+    <p style="color: red;"><strong>{{ error }}</strong></p>
+    <form method="post">
+        <div style="margin-bottom: 10px;">
+            <label for="gen_size">Generations størrelse</label><br>
+            <input name="gen_size" id="gen_size" type="text">
+        </div>
+
+        <div style="margin-bottom: 10px;">
+            <label for="mutation_risk">Mutations risiko (i procent)</label><br>
+            <input name="mutation_risk" id="mutation_risk" type="text">
+        </div>
+        
+        <button type="submit">Kør</button>
+    </form>
+    </center>
+
+</body>
+
+</html>
