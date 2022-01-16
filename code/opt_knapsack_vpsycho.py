@@ -105,27 +105,3 @@ for i in range(100):
     agent.evolve_one_generation()
 
 
-window = tk.Tk()
-
-fig = plt.Figure(figsize=(20,20), dpi=100)
-plot1 = fig.add_subplot(121)
-plot1.plot(max_values)
-canvas =FigureCanvasTkAgg(fig, master = window)
-canvas.draw()
-canvas.get_tk_widget().pack()
-window.title("plotoitenrsaeoitn")
-window.geometry("500x500")
-greeting = tk.Label(text="Hello, Tkinter")
-greeting.pack()
-window.mainloop()
-
-
-print(max_values)
-print(max(max_values))
-
-# plt.plot(max_values)
-# plt.plot(mean_values)
-# plt.plot(min_values)
-# plt.axis([0,1000,0,max(max_values)])
-# plt.show()
-print(tm-time.time())

@@ -8,3 +8,7 @@
 ```python server.py```
 
 3. Brug applikationen🎉🎉🎉
+
+
+HOST HER:
+https://www.geeksforgeeks.org/deploy-python-flask-app-on-heroku/

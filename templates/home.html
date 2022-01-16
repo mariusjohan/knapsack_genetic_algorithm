@@ -7,25 +7,76 @@
 </head>
 
 <body>
-    <center>
-        <a href="settings/"class="btn btn-secondary" type="button" style="margin-top: 15px">Indstillinger</a>
-        <a href="" class="btn btn-primary mx-5"type="button" style="margin-top: 15px">Næste epoch</a>
-        <a href="reset" class="btn btn-warning"type="button" style="margin-top: 15px">Reset data</a>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <a href="settings/" class="btn btn-secondary m-2" type="button" style="margin-top: 15px">Indstillinger</a>
+                    <div class="btn-group m-2" role="group" aria-label="Basic example" style="margin-top: 15px">
+                        <a href="" class="btn btn-primary" type="button">Næste epoch</a>
+                        <a id="autoplay" class="btn btn-primary" type="button">Autoplay/pause</a>
+                    </div>
+                    <a href="reset" class="btn btn-warning m-2" type="button" style="margin-top: 15px">Reset data</a>
+                </div>
+            </div>
+            <div class="col">
+                <h2> Data for nyeste generation</h2>
+                <table class="table" style="width: 50rem">
+                    <tr>
+                        <td> Bedste rygsæk i population</td>
+                        <td> {{ item_string }}</td>
+                    </tr>
+                    <tr>
+                        <td>Værdi</td>
+                        <td> {{ max_value }}</td>
+                    </tr>
+                    <tr>
+                        <td>Vægt</td>
+                        <td> {{ max_weight }} g</td>
+                    </tr>
+                
+                    <tr>
+                        <td> Variationsbredde i population</td>
+                        <td> {{ max_fitness_score[-1]-min_fitness_score[-1] }} </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
 
-        <div class="chart-container" style="width:60vw; margin-top: 50px">
+
+
+    <div class="text-center" style="width: 30rem;">
+>
+                
+        <div class="m-2">
+            
+        </div>
+
+        <div class="chart-container" style="width:65vw; margin-top: 50px">
             <canvas id="myChart"></canvas>
         </div>
-    </center>
+    </div>
+
+
+
 
     <script>
         // Det hele virker, også selvom den er rød
         const max_fitness = {{ max_fitness_score }};
         const avg_fitness = {{ avg_fitness_score }};
+        const min_fitness = {{ min_fitness_score }};
         const labels = {{ labels }};
 
         const data = {
             labels: labels,
             datasets: [
+                {
+                    label: 'Gennemsnits fitness score',
+                    backgroundColor: 'rgb(132, 255, 99)',
+                    borderColor: 'rgb(132, 255, 99)',
+                    data: avg_fitness, // Her skal vi have avg fitness scorene ud
+                },    
                 {
                     label: 'Maximal fitness score',
                     backgroundColor: 'rgb(255, 99, 132)',
@@ -33,10 +84,10 @@
                     data: max_fitness, // Her skal vi have max fitness scorene ud
                 },
                 {
-                    label: 'Gennemsnits fitness score',
-                    backgroundColor: 'rgb(132, 255, 99)',
-                    borderColor: 'rgb(132, 255, 99)',
-                    data: avg_fitness, // Her skal vi have avg fitness scorene ud
+                    label: 'Minimum fitness score',
+                    backgroundColor: 'rgb(99, 132, 255)',
+                    borderColor: 'rgb(99, 132, 255)',
+                    data: min_fitness, // Her skal vi have avg fitness scorene ud
                 },
             ]
         };
@@ -57,6 +108,45 @@
             document.getElementById('myChart'),
             config
         );
+    </script>
+
+    <script>
+        function getUrlVars(url) {
+            var vars = {};
+            var parts = url.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+                vars[key] = value;
+            });
+            return vars;
+        }
+
+        // Check hvis url indeholder "?autoplay=true"
+        if (getUrlVars(location.href)['autoplay'] == 'true') {
+            var autoPlay = true;
+        } else {
+            var autoPlay = false;
+        }
+
+        document.getElementById("autoplay").onclick = function () {
+            autoPlay = !autoPlay;
+            if (autoPlay == false) {
+                var new_url = 'http://127.0.0.1:5000/run?autoplay=false';
+                window.open(new_url, '_self');
+            }
+        };
+
+        var counter = 0;
+
+        setInterval(function () { 
+            if (autoPlay) {
+                var new_url = 'http://127.0.0.1:5000/run?autoplay=true';
+                window.open(new_url, '_self');
+            } else {
+                console.log(counter);
+                counter ++;
+            }
+        }, 500);
+
+        
     </script>
 
 </body>

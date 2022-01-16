@@ -9,14 +9,23 @@
     <p style="color: red;"><strong>{{ error }}</strong></p>
     <form method="post">
         <div style="margin-bottom: 10px;">
-            <label for="gen_size">Generations størrelse</label><br>
+            <label for="gen_size">Generations størrelse (100 anbefalet)</label><br>
             <input name="gen_size" id="gen_size" type="text">
         </div>
 
         <div style="margin-bottom: 10px;">
-            <label for="mutation_risk">Mutations risiko (i procent)</label><br>
+            <label for="mutation_risk">Mutations risiko (0.05 anbefalet)</label><br>
             <input name="mutation_risk" id="mutation_risk" type="text">
         </div>
+
+        <div style="margin-bottom: 10px;">
+            <label for="max_weight">Maximal vægt i rygsækken (5000 anbefalet)</label><br>
+            <input name="max_weight" id="max_weight" type="text">
+        </div>
+
+        <!-- <div style="margin-bottom: 10px;">
+            
+        </div> -->
         
         <button type="submit">Kør</button>
     </form>
